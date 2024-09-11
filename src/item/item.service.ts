@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Item } from './item.entity';
 import { Repository } from 'typeorm';
 import { CreateItemDto } from './dto/create-item.dto';
+import { UpdateItemDto } from './dto/update-item.dto';
 
 @Injectable()
 export class ItemService {
@@ -36,5 +37,31 @@ export class ItemService {
 
   async getItemById(id: number) {
     return await this.itemRepository.findOne({ where: { id } });
+  }
+
+  async updateItem(id: number, itemDto: UpdateItemDto) {
+    const itemFromDb = await this.itemRepository.findOne({ where: { id } });
+
+    if (!itemFromDb) {
+      throw new HttpException(
+        'Itm with id ' + id + ' not found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+
+    Object.assign(itemFromDb, itemDto);
+
+    return await this.itemRepository.save(itemFromDb);
+  }
+
+  async deleteItem(id: number) {
+    const itemFromDb = await this.itemRepository.findOne({ where: { id } });
+    if (!itemFromDb) {
+      throw new HttpException(
+        'Itm with id ' + id + ' not found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    return this.itemRepository.delete(itemFromDb);
   }
 }
