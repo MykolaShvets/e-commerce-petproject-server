@@ -39,12 +39,14 @@ export class ItemService {
     return await this.itemRepository.findOne({ where: { id } });
   }
 
-  async updateItem(id: number, itemDto: UpdateItemDto) {
-    const itemFromDb = await this.itemRepository.findOne({ where: { id } });
+  async updateItem(itemDto: UpdateItemDto) {
+    const itemFromDb = await this.itemRepository.findOne({
+      where: { id: itemDto.id },
+    });
 
     if (!itemFromDb) {
       throw new HttpException(
-        'Itm with id ' + id + ' not found',
+        'Item with id ' + itemDto.id + ' not found',
         HttpStatus.NOT_FOUND,
       );
     }
@@ -58,7 +60,7 @@ export class ItemService {
     const itemFromDb = await this.itemRepository.findOne({ where: { id } });
     if (!itemFromDb) {
       throw new HttpException(
-        'Itm with id ' + id + ' not found',
+        'Item with id ' + id + ' not found',
         HttpStatus.NOT_FOUND,
       );
     }

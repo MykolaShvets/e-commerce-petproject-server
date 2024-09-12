@@ -31,12 +31,9 @@ export class ItemController {
   }
 
   @UseGuards(AuthGuard, AdminGuard)
-  @Put(':itemId')
-  async updateItem(
-    @Param('itemId') id: string,
-    @Body() itemDto: UpdateItemDto,
-  ) {
-    return await this.itemService.updateItem(+id, itemDto);
+  @Put()
+  async updateItem(@Body() itemDto: UpdateItemDto) {
+    return await this.itemService.updateItem(itemDto);
   }
 
   @UseGuards(AuthGuard, AdminGuard)
