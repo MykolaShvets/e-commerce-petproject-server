@@ -6,6 +6,9 @@ import {
   Min,
   MinLength,
 } from 'class-validator';
+import { Color } from '../color.entity';
+import { Category } from '../category.entity';
+import { Brand } from '../brand.entity';
 
 export class CreateItemDto {
   @IsNotEmpty()
@@ -36,4 +39,10 @@ export class CreateItemDto {
 
   @IsUrl()
   readonly imageUrl: string;
+
+  readonly colors: Color[];
+
+  readonly categories: Category[];
+
+  readonly brand: Brand;
 }

@@ -6,6 +6,9 @@ import {
   Min,
   MinLength,
 } from 'class-validator';
+import { Brand } from '../brand.entity';
+import { Category } from '../category.entity';
+import { Color } from '../color.entity';
 
 export class UpdateItemDto {
   @IsNumber()
@@ -43,4 +46,10 @@ export class UpdateItemDto {
   @IsOptional()
   @IsUrl()
   readonly imageUrl?: string;
+
+  readonly colors?: Color[];
+
+  readonly categories?: Category[];
+
+  readonly brand?: Brand;
 }
